@@ -1,8 +1,8 @@
-package jdbcExample.db.manager;
+package todo.db.manager;
 
-import jdbcExample.db.DBConnectionProvider;
-import jdbcExample.model.Gender;
-import jdbcExample.db.data.User;
+import todo.db.DBConnectionProvider;
+import todo.model.Gender;
+import todo.model.User;
 
 import java.sql.*;
 

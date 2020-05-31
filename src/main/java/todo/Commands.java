@@ -1,4 +1,4 @@
-package jdbcExample;
+package todo;
 
 public interface Commands {
 

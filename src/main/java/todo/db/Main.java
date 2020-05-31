@@ -1,16 +1,15 @@
-package jdbcExample.db;
+package todo.db;
 
-import jdbcExample.Commands;
-import jdbcExample.db.manager.TodoManager;
-import jdbcExample.db.manager.UserManager;
-import jdbcExample.model.Gender;
-import jdbcExample.db.data.Todo;
-import jdbcExample.db.data.User;
-import jdbcExample.model.TodoStatus;
+import todo.Commands;
+import todo.db.manager.TodoManager;
+import todo.db.manager.UserManager;
+import todo.model.Gender;
+import todo.model.Todo;
+import todo.model.User;
+import todo.model.TodoStatus;
 
 import java.sql.*;
 import java.text.ParseException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {

@@ -1,4 +1,4 @@
-package jdbcExample.db.data;
+package todo.model;
 
 import lombok.Data;
 

@@ -1,7 +1,8 @@
-package jdbcExample.db.manager;
+package todo.db.manager;
 
-import jdbcExample.db.DBConnectionProvider;
-import jdbcExample.db.data.Todo;
+import todo.db.DBConnectionProvider;
+import todo.model.Todo;
+import todo.model.TodoStatus;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -52,8 +53,9 @@ public class TodoManager {
     }
 
     public void printTodosByStatusInProgress(int user_id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM todo WHERE STATUS = 'IN_PROGRESS' AND id = ?");
-        statement.setInt(1, user_id);
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM todo WHERE STATUS = ? AND user_id = ?");
+        statement.setString(1, String.valueOf(TodoStatus.IN_PROGRESS));
+        statement.setInt(2, user_id);
         ResultSet resultSet = statement.executeQuery();
         List<Todo> todos = new LinkedList<>();
         while (resultSet.next()) {

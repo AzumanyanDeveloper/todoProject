@@ -1,6 +1,6 @@
-package jdbcExample.db.data;
+package todo.model;
 
-import jdbcExample.model.Gender;
+import todo.model.Gender;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

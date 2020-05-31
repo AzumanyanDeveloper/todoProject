@@ -112,25 +112,32 @@ public class Main {
         String[] todoDataStr = todoData.split(",");
         Todo todo = new Todo();
         todo.setName(todoDataStr[0]);
+        try {
         todo.setDeadline(Date.valueOf(todoDataStr[1]));
+        }catch (IllegalArgumentException e){
+            System.out.println("date format filled in incorrectly: Please try again");
+            addTodos();
+        }
         todo.setUserId(generalUser.getId());
         try {
             todoManager.addTodo(todo);
-        } catch (SQLException | ParseException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     private static void loginUser() throws SQLException {
-        System.out.println("Please input your phoneNumber");
+        System.out.println("Please input your phoneNumber and password");
         String loginUser = scanner.nextLine();
-        User userByPhoneNumber = userManager.getUserByPhoneNumber(loginUser);
+        String[] loginUserStr = loginUser.split(",");
+        User userByPhoneNumber = userManager.getUserByPhoneNumberAndPassword(loginUserStr[0],loginUserStr[1]);
         if (userByPhoneNumber != null) {
             System.out.println("Welcome");
             generalUser = userByPhoneNumber;
             loginSucessfulCommands();
         } else {
-            System.out.println("Incorrect phoneNumber");
+            System.out.println("Incorrect phoneNumber or password: Please try again");
+            loginUser();
         }
 
     }

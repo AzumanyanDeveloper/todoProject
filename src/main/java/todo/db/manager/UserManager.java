@@ -30,9 +30,11 @@ public class UserManager {
         }
     }
 
-    public User getUserByPhoneNumber(String phoneNumber) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM USER WHERE phoneNumber =" + phoneNumber);
+    public User getUserByPhoneNumberAndPassword(String phoneNumber,String password) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM USER WHERE phoneNumber = ? AND password = ?");
+        statement.setString(1,phoneNumber);
+        statement.setString(2,password);
+        ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             User user = new User();
             user.setId(resultSet.getInt("id"));
@@ -44,6 +46,24 @@ public class UserManager {
             return user;
         }
         return null;
+    }
+
+    public User getUserByPhoneNumber(String phoneNumber) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM USER WHERE phoneNumber = ?");
+        statement.setString(1,phoneNumber);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            User user = new User();
+            user.setId(resultSet.getInt("id"));
+            user.setName(resultSet.getString("name"));
+            user.setSurname(resultSet.getString("surname"));
+            user.setGender(Gender.valueOf(resultSet.getString("gender")));
+            user.setPhone(resultSet.getString("phoneNumber"));
+            user.setPassword(resultSet.getString("password"));
+            return user;
+        }
+        return null;
+
     }
 }
 

@@ -17,7 +17,7 @@ public class TodoManager {
         connection = DBConnectionProvider.getInstance().getConnection();
     }
 
-    public void addTodo(Todo todo) throws SQLException, ParseException {
+    public void addTodo(Todo todo) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("Insert into todo(name,deadline,user_id) Values(?,?,?)", Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, todo.getName());
         preparedStatement.setDate(2, todo.getDeadline());
@@ -52,10 +52,10 @@ public class TodoManager {
         }
     }
 
-    public void printTodosByStatusInProgress(int user_id) throws SQLException {
+    public void printTodosByStatusInProgress(int userId) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM todo WHERE STATUS = ? AND user_id = ?");
         statement.setString(1, String.valueOf(TodoStatus.IN_PROGRESS));
-        statement.setInt(2, user_id);
+        statement.setInt(2, userId);
         ResultSet resultSet = statement.executeQuery();
         List<Todo> todos = new LinkedList<>();
         while (resultSet.next()) {
@@ -73,9 +73,9 @@ public class TodoManager {
         }
     }
 
-    public void printTodosByStatusInFinished(int user_id) throws SQLException {
+    public void printTodosByStatusInFinished(int userId) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM todo WHERE STATUS = 'FINISHED' AND user_id = ?");
-        statement.setInt(1, user_id);
+        statement.setInt(1, userId);
         ResultSet resultSet = statement.executeQuery();
         List<Todo> todos = new LinkedList<>();
         while (resultSet.next()) {
@@ -93,11 +93,11 @@ public class TodoManager {
         }
     }
 
-    public void changeTodoStatus(int id, String status, int user_id) throws SQLException {
+    public void changeTodoStatus(int id, String status, int userId) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("UPDATE todo SET status = ? WHERE id = ? AND user_id = ?");
         statement.setString(1, status);
         statement.setInt(2, id);
-        statement.setInt(3, user_id);
+        statement.setInt(3, userId);
         statement.executeUpdate();
     }
 
